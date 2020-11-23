@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>An answer · PlaywrightJS Tutorial</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="One of the possible answers is"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="An answer · PlaywrightJS Tutorial"/><meta property="og:type" content="website"/><meta property="og:url" content="https://www,google.com/"/><meta property="og:description" content="One of the possible answers is"/><meta property="og:image" content="https://www,google.com/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://www,google.com/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.ico" alt="PlaywrightJS Tutorial"/><h2 class="headerTitleWithLogo">PlaywrightJS Tutorial</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/doc1" target="_self">Docs</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Using PlayWright on web pages</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Setup</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc1">PlaywrightJS Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc2">Install Mocha and Chai</a></li><li class="navListItem"><a class="navItem" href="/docs/doc3">Installation Test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">First Steps</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc4">Create a PlaywrightJS Test</a></li><li class="navListItem"><a class="navItem" href="/docs/doc5">Using Mocha and Chai</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">The Playwright Library</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc6">The Browser Object</a></li><li class="navListItem"><a class="navItem" href="/docs/doc7">Selectors</a></li><li class="navListItem"><a class="navItem" href="/docs/doc71">Navigation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc8">Interactions</a></li><li class="navListItem"><a class="navItem" href="/docs/doc81">Auditing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Using PlayWright on web pages</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc9">A real world case</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/doc91">An answer</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Code Generation</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc10">Code Generation</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">An answer</h1></header><article><div><span><p>One of the possible answers is</p>
+<pre><code class="hljs css language-javascript {.line-numbers}"><span class="hljs-keyword">const</span> pw = <span class="hljs-built_in">require</span>(<span class="hljs-string">'playwright'</span>)
+<span class="hljs-keyword">const</span> chai = <span class="hljs-built_in">require</span>(<span class="hljs-string">'chai'</span>)
+<span class="hljs-keyword">const</span> expect = chai.expect
+
+<span class="hljs-keyword">let</span> page, browser, context
+
+describe(<span class="hljs-string">'Selenium Playground Test'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.timeout(<span class="hljs-number">30000</span>);
+    before(<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        browser = <span class="hljs-keyword">await</span> pw.chromium.launch({
+          <span class="hljs-attr">headless</span>: <span class="hljs-literal">false</span>
+        });
+        context = <span class="hljs-keyword">await</span> browser.newContext();
+        page = <span class="hljs-keyword">await</span> context.newPage(<span class="hljs-string">'http://leafground.com/'</span>)
+    })
+
+    after(<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">/*
+        await page.close();
+        await context.close();
+        await browser.close();
+       */</span>
+    })
+
+    it(<span class="hljs-string">'Checks the title of the page'</span>, <span class="hljs-keyword">async</span>() =&gt; {
+        <span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'http://leafground.com/'</span>);
+        <span class="hljs-keyword">const</span> title = <span class="hljs-keyword">await</span> page.title();
+        expect(title).to.equal(<span class="hljs-string">'TestLeaf - Selenium Playground'</span>)
+    })
+
+    it(<span class="hljs-string">'Navigate to Edit page'</span>, <span class="hljs-keyword">async</span>() =&gt; {
+        <span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'text="Edit"'</span>);
+        <span class="hljs-keyword">await</span> page.waitForSelector(<span class="hljs-string">'.wp-heading'</span>);
+        <span class="hljs-comment">//await page.waitForNavigation();</span>
+        <span class="hljs-keyword">let</span> title = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'.wp-heading'</span>)
+        <span class="hljs-keyword">let</span> text = <span class="hljs-keyword">await</span> title.textContent();
+
+        <span class="hljs-keyword">await</span> page.fill(<span class="hljs-string">'#email'</span>, <span class="hljs-string">'mateo@mateo.com'</span>);
+        <span class="hljs-keyword">let</span> append = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'input[value="Append "]'</span>);
+        <span class="hljs-keyword">await</span> append.press(<span class="hljs-string">'End'</span>);
+        <span class="hljs-keyword">await</span> append.type(<span class="hljs-string">'something here'</span>);
+        <span class="hljs-keyword">await</span> append.press(<span class="hljs-string">'Tab'</span>);
+        <span class="hljs-keyword">let</span> username = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'input[name="username"]'</span>);
+        <span class="hljs-keyword">let</span> username_text = <span class="hljs-keyword">await</span> username.getAttribute(<span class="hljs-string">'value'</span>)
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'username: '</span>+ username_text);
+        username = <span class="hljs-keyword">await</span> page.$$(<span class="hljs-string">'input[name="username"]'</span>);
+        <span class="hljs-keyword">await</span> username[<span class="hljs-number">1</span>].fill(<span class="hljs-string">''</span>);
+        <span class="hljs-keyword">let</span> last = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'input:last-of-type'</span>);
+        <span class="hljs-keyword">let</span> last_disabled = <span class="hljs-keyword">await</span> last.getProperty(<span class="hljs-string">'disabled'</span>)
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'last disabled: '</span>+ last_disabled);
+
+
+        expect(page.url()).to.equal(<span class="hljs-string">'http://leafground.com/pages/Edit.html'</span>)
+        expect(text).to.match(<span class="hljs-regexp">/Work with Edit Fields/</span>)
+    })
+})
+</code></pre>
+<p>Please discuss...</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/doc9"><span class="arrow-prev">← </span><span>A real world case</span></a><a class="docs-next button" href="/docs/doc10"><span>Code Generation</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"></footer></div></body></html>
