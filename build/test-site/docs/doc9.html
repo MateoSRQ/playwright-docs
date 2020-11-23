@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>A Real world case · PlaywrightJS Tutorial</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="One of the better ways to understand how Playwright works is to use it on a web page. For this part, [the Selenium Playground](http://www.leafground.com) will be used. Please open the website and navigate thru its items to better understand its structure."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="A Real world case · PlaywrightJS Tutorial"/><meta property="og:type" content="website"/><meta property="og:url" content="https://www,google.com/"/><meta property="og:description" content="One of the better ways to understand how Playwright works is to use it on a web page. For this part, [the Selenium Playground](http://www.leafground.com) will be used. Please open the website and navigate thru its items to better understand its structure."/><meta property="og:image" content="https://www,google.com/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://www,google.com/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.ico" alt="PlaywrightJS Tutorial"/><h2 class="headerTitleWithLogo">PlaywrightJS Tutorial</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/doc1" target="_self">Docs</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Using PlayWright on web pages</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Setup</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc1">PlaywrightJS Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc2">Install Mocha and Chai</a></li><li class="navListItem"><a class="navItem" href="/docs/doc3">Installation Test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">First Steps</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc4">Create a PlaywrightJS Test</a></li><li class="navListItem"><a class="navItem" href="/docs/doc5">Using Mocha and Chai</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">The Playwright Library</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc6">The Browser Object</a></li><li class="navListItem"><a class="navItem" href="/docs/doc7">Selectors</a></li><li class="navListItem"><a class="navItem" href="/docs/doc7.1">Navigation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc8">Interactions</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Using PlayWright on web pages</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/doc9">A real world case</a></li><li class="navListItem"><a class="navItem" href="/docs/doc9.1">An answer</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Code Generation</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc10">Code Generation</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">A Real world case</h1></header><article><div><span><p>One of the better ways to understand how Playwright works is to use it on a web page. For this part, <a href="http://www.leafground.com">the Selenium Playground</a> will be used. Please open the website and navigate thru its items to better understand its structure.</p>
+<h2><a class="anchor" aria-hidden="true" id="creating-a-new-test-file"></a><a href="#creating-a-new-test-file" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Creating a new test file</h2>
+<p>Create a new test file and save it as <strong>test_1.js</strong> , with this code:</p>
+<pre><code class="hljs css language-javascript {.line-numbers}"><span class="hljs-keyword">const</span> pw = <span class="hljs-built_in">require</span>(<span class="hljs-string">'playwright'</span>)
+<span class="hljs-keyword">const</span> chai = <span class="hljs-built_in">require</span>(<span class="hljs-string">'chai'</span>)
+<span class="hljs-keyword">const</span> expect = chai.expect
+
+<span class="hljs-keyword">let</span> page, browser, context
+
+describe(<span class="hljs-string">'Selenium Playground Test'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.timeout(<span class="hljs-number">30000</span>);
+    before(<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        browser = <span class="hljs-keyword">await</span> pw.chromium.launch({
+          <span class="hljs-attr">headless</span>: <span class="hljs-literal">false</span>
+        });
+        context = <span class="hljs-keyword">await</span> browser.newContext();
+        page = <span class="hljs-keyword">await</span> context.newPage(<span class="hljs-string">'http://leafground.com/'</span>)
+    })
+
+    after(<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">/*
+        await page.close();
+        await context.close();
+        await browser.close();
+       */</span>
+    })
+
+    it(<span class="hljs-string">'Checks the title of the page'</span>, <span class="hljs-keyword">async</span>() =&gt; {
+        <span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'http://leafground.com/'</span>);
+        <span class="hljs-keyword">const</span> title = <span class="hljs-keyword">await</span> page.title();
+        expect(title).to.equal(<span class="hljs-string">'TestLeaf - Selenium Playground'</span>)
+    })
+})
+</code></pre>
+<p>We are using <strong>Mocha</strong> and <strong>Chai</strong> libraries. Try the test by executing:</p>
+<pre><code class="hljs">&gt; <span class="hljs-selector-tag">mocha</span> <span class="hljs-selector-tag">test1</span><span class="hljs-selector-class">.js</span>
+</code></pre>
+<p>Please notice:</p>
+<ul>
+<li>The timeout setting, which is used to override the default setting of 2000ms and account for the network speed before the test fails.</li>
+<li>The <code>headless: false</code> argument on the browser instance, to see that the test is doing</li>
+<li>The after callback code is commented, so the test won't close the browser after finishing</li>
+</ul>
+<p>You should see the browser in the main page, and the only test marked as a pass.</p>
+<h2><a class="anchor" aria-hidden="true" id="navigating-to-the-edit-menu"></a><a href="#navigating-to-the-edit-menu" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Navigating to the Edit menu</h2>
+<p>To simulate user navigation, we want to click the edit menu item from the main page. In order to do that, we have to select it first. One quick way to find out is by right clicking on the desired element and choosing the <em>Inspect</em> or <em>Inspect Element</em> options. The browser will look for the clicked item in the code.</p>
+<p><img src="/img/capture_1.png" alt="Screenshot" title="The Inspect Option"></p>
+<p>From there, we can see that that item has:</p>
+<ul>
+<li>An &quot;Edit&quot; text inside</li>
+<li>A  wp-categories-title class.</li>
+</ul>
+<p>Since a &quot;title&quot; class could be used for more than this item, we use a text selector:
+Please change the code to do this action</p>
+<pre><code class="hljs css language-javascript {.line-numbers}"><span class="hljs-keyword">const</span> pw = <span class="hljs-built_in">require</span>(<span class="hljs-string">'playwright'</span>)
+<span class="hljs-keyword">const</span> chai = <span class="hljs-built_in">require</span>(<span class="hljs-string">'chai'</span>)
+<span class="hljs-keyword">const</span> expect = chai.expect
+
+<span class="hljs-keyword">let</span> page, browser, context
+
+describe(<span class="hljs-string">'Selenium Playground Test'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.timeout(<span class="hljs-number">30000</span>);
+    before(<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        browser = <span class="hljs-keyword">await</span> pw.chromium.launch({
+          <span class="hljs-attr">headless</span>: <span class="hljs-literal">false</span>
+        });
+        context = <span class="hljs-keyword">await</span> browser.newContext();
+        page = <span class="hljs-keyword">await</span> context.newPage(<span class="hljs-string">'http://leafground.com/'</span>)
+    })
+
+    after(<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-comment">/*
+        await page.close();
+        await context.close();
+        await browser.close();
+       */</span>
+    })
+
+    it(<span class="hljs-string">'Checks the title of the page'</span>, <span class="hljs-keyword">async</span>() =&gt; {
+        <span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'http://leafground.com/'</span>);
+        <span class="hljs-keyword">const</span> title = <span class="hljs-keyword">await</span> page.title();
+        expect(title).to.equal(<span class="hljs-string">'TestLeaf - Selenium Playground'</span>)
+    })
+
+    it(<span class="hljs-string">'Navigates to Edit page'</span>, <span class="hljs-keyword">async</span>() =&gt; {
+        <span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'text="Edit"'</span>);
+    })
+})
+</code></pre>
+<p>Notice the new function at the end of the file. It will click the item with an 'Edit' text. Please run the new code and check if it works. Don't close the browser yet. You should see the Edit page loaded.</p>
+<h2><a class="anchor" aria-hidden="true" id="checking-the-navigation-status"></a><a href="#checking-the-navigation-status" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Checking the navigation status</h2>
+<p>Now, to assert the navigation has worked, we have to check if we are on the correct page. There are many options to do this, and we will choose two of them:</p>
+<ul>
+<li>Checking the Browser URL</li>
+<li>Checking a page item</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="asserting-the-url"></a><a href="#asserting-the-url" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Asserting the URL</h3>
+<p>For the first one, we can check the URL has changed to <a href="'http://leafground.com/pages/Edit.html'">http://leafground.com/pages/Edit.html</a>. We can test this by adding an assertion:</p>
+<pre><code class="hljs">it('Navigate to Edit page', async() =&gt; {
+    await page.click('text=<span class="hljs-string">"Edit"</span>')<span class="hljs-comment">;</span>
+    expect(<span class="hljs-name">page</span>.url()).to.equal('http<span class="hljs-symbol">://leafground</span>.com/pages/Edit.html')
+})
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="asserting-an-item"></a><a href="#asserting-an-item" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Asserting an Item</h3>
+<p>For the second option, we can check an specific item on the Edit page; if the item is present, then we are on the correct page.
+Using the inspector, the element that contains the title &quot;Work with Edit Fields&quot;, and has a <em>wp-heading</em> CSS class name.</p>
+<p>If we modify the function to include one extra validation, we get</p>
+<pre><code class="hljs css language-js">    it(<span class="hljs-string">'Navigate to Edit page'</span>, <span class="hljs-keyword">async</span>() =&gt; {
+        <span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'text="Edit"'</span>);
+        <span class="hljs-keyword">await</span> page.waitForSelector(<span class="hljs-string">'.wp-heading'</span>);
+        <span class="hljs-keyword">let</span> title = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'.wp-heading'</span>)
+        <span class="hljs-keyword">let</span> text = <span class="hljs-keyword">await</span> title.textContent();
+        expect(page.url()).to.equal(<span class="hljs-string">'http://leafground.com/pages/Edit.html'</span>)
+        expect(text).to.match(<span class="hljs-regexp">/Work with Edit Fields/</span>)
+    })
+</code></pre>
+<p>Let's review the new code:</p>
+<ul>
+<li>A CSS class selector is created, and saved on the <em>title</em> variable</li>
+<li>Since clicking on the Edit button triggers new content, we should wait for the element to be visible with the <em>waitForSelector</em> function.</li>
+<li>Once we have an item, we extract the text with the element handle's <em>textContent</em> function.</li>
+<li>Finally, we assert that the text matches. On most pages, the rendered text has whitespaces and other non printable characters, so testing against a regular expression is a more robust option.</li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="next-steps"></a><a href="#next-steps" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Next steps</h2>
+<p>The Edit Fields page have many other inputs. Using the code inspector, try to modify the test to the required actions.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/doc8"><span class="arrow-prev">← </span><span>Interactions</span></a><a class="docs-next button" href="/docs/doc9.1"><span>An answer</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#creating-a-new-test-file">Creating a new test file</a></li><li><a href="#navigating-to-the-edit-menu">Navigating to the Edit menu</a></li><li><a href="#checking-the-navigation-status">Checking the navigation status</a><ul class="toc-headings"><li><a href="#asserting-the-url">Asserting the URL</a></li><li><a href="#asserting-an-item">Asserting an Item</a></li></ul></li><li><a href="#next-steps">Next steps</a></li></ul></nav></div><footer class="nav-footer" id="footer"></footer></div></body></html>

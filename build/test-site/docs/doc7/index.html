@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Selectors · PlaywrightJS Tutorial</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="## What are selectors?"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Selectors · PlaywrightJS Tutorial"/><meta property="og:type" content="website"/><meta property="og:url" content="https://www,google.com/"/><meta property="og:description" content="## What are selectors?"/><meta property="og:image" content="https://www,google.com/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://www,google.com/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.ico" alt="PlaywrightJS Tutorial"/><h2 class="headerTitleWithLogo">PlaywrightJS Tutorial</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/doc1" target="_self">Docs</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>The Playwright Library</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Setup</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc1">PlaywrightJS Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc2">Install Mocha and Chai</a></li><li class="navListItem"><a class="navItem" href="/docs/doc3">Installation Test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">First Steps</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc4">Create a PlaywrightJS Test</a></li><li class="navListItem"><a class="navItem" href="/docs/doc5">Using Mocha and Chai</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">The Playwright Library</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc6">The Browser Object</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/doc7">Selectors</a></li><li class="navListItem"><a class="navItem" href="/docs/doc7.1">Navigation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc8">Interactions</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Using PlayWright on web pages</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc9">A real world case</a></li><li class="navListItem"><a class="navItem" href="/docs/doc9.1">An answer</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Code Generation</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc10">Code Generation</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Selectors</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="what-are-selectors"></a><a href="#what-are-selectors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What are selectors?</h2>
+<p>Selectors are queries to the Document Object Model that allows to specify DOM items to do interactions and retrieve information.
+Playwright can use one of four selection engines:</p>
+<ul>
+<li>Text selectors, which selects items based on its text contents and can used like this:</li>
+</ul>
+<pre><code class="hljs">page.<span class="hljs-constructor">$('<span class="hljs-params">text</span>=<span class="hljs-string">"foo"</span>')</span> <span class="hljs-comment">// selects an element which contains text "foo"</span>
+page.<span class="hljs-constructor">$('<span class="hljs-string">"foo"</span>')</span> <span class="hljs-comment">// short form</span>
+</code></pre>
+<ul>
+<li>CSS selectors, which selects items based on its CSS properties and are used like this:</li>
+</ul>
+<pre><code class="hljs">page.<span class="hljs-constructor">$('<span class="hljs-params">css</span>=<span class="hljs-params">div</span>')</span> <span class="hljs-comment">// select a div</span>
+page.<span class="hljs-constructor">$('<span class="hljs-params">div</span>')</span> <span class="hljs-comment">// short form</span>
+</code></pre>
+<ul>
+<li>XPath selectors, which select items based on its XML tree position, and are used like this:</li>
+</ul>
+<pre><code class="hljs">page.<span class="hljs-constructor">$('<span class="hljs-params">xpath</span>=<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-params">html</span>')</span> <span class="hljs-comment">// selects the root html element </span>
+page.<span class="hljs-constructor">$('<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-params">html</span>')</span> <span class="hljs-comment">// short form</span>
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="selecting-many-elements"></a><a href="#selecting-many-elements" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Selecting many elements</h2>
+<p>the <em>page.$</em> function returns, if any, the first element the matches the filter criteria.
+If many elements are selected, the <em>page.$$</em> functions returns an array of all matched items</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> items = <span class="hljs-keyword">await</span> page.$$(<span class="hljs-string">'.list-item'</span>); <span class="hljs-comment">// returns an array</span>
+<span class="hljs-keyword">await</span> items[<span class="hljs-number">0</span>].click();
+</code></pre>
+<ul>
+<li>ID selector, which select items based on its id:</li>
+</ul>
+<pre><code class="hljs">page.$(<span class="hljs-symbol">'id</span>=<span class="hljs-string">"foo"</span>') // <span class="hljs-keyword">select</span> element <span class="hljs-keyword">with</span> foo id
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="chaining-selectors"></a><a href="#chaining-selectors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Chaining Selectors</h2>
+<p>Selectors can be combined with the <strong>&gt;&gt;</strong> operator which searchs for a selector in the context of the previous selection, for example:</p>
+<pre><code class="hljs">page.<span class="hljs-constructor">$('<span class="hljs-params">css</span>=<span class="hljs-params">article</span> &gt;&gt; <span class="hljs-params">css</span>=.<span class="hljs-params">bar</span> &gt; .<span class="hljs-params">baz</span> &gt;&gt; <span class="hljs-params">css</span>=<span class="hljs-params">span</span>[<span class="hljs-params">attr</span>=<span class="hljs-params">value</span>]')</span> 
+</code></pre>
+<p>Selects the span element inside an element with bar class, inside an article.</p>
+<h3><a class="anchor" aria-hidden="true" id="examples"></a><a href="#examples" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
+<pre><code class="hljs"><span class="hljs-keyword">const</span> handle = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'css=div'</span>);
+<span class="hljs-keyword">const</span> handle = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'xpath=//html/body/div'</span>);
+<span class="hljs-keyword">const</span> handle = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'text="foo"'</span>);
+<span class="hljs-keyword">const</span> handle = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'xpath=//html/body/div &gt;&gt; css=span'</span>);
+<span class="hljs-keyword">const</span> handle = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'div'</span>);
+<span class="hljs-keyword">const</span> handle = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'//html/body/div'</span>);
+<span class="hljs-keyword">const</span> handle = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'"foo"'</span>);
+<span class="hljs-keyword">const</span> handle = <span class="hljs-keyword">await</span> divHandle.$(<span class="hljs-string">'css=span'</span>);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="common-css-selectors"></a><a href="#common-css-selectors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Common CSS Selectors</h2>
+<p>ID and CSS selectors usually are the most used. Here is a list of the most common ones:</p>
+<table>
+<thead>
+<tr><th>Selector Name</th><th>Selection</th></tr>
+</thead>
+<tbody>
+<tr><td>#<em>name</em></td><td>Selects an element by id</td></tr>
+<tr><td>.<em>name</em></td><td>Selects an element by class name</td></tr>
+<tr><td><em>type</em></td><td>Selects an element by its type</td></tr>
+<tr><td><em>antecessorSelector</em> <em>selector</em></td><td>Selects an element whose antecessor is antecessorSelector</td></tr>
+<tr><td><em>adjacentSelector</em> + <em>selector</em></td><td>Selects an element immediately preceded by adjacentSelector</td></tr>
+<tr><td><em>antecessorSelector</em> &gt; <em>selector</em></td><td>Selects an element whose direct antecessor is antecessorSelector</td></tr>
+<tr><td><em>type</em>[<em>attribute</em>=<em>value</em>]</td><td>Selects an element whose attribute is equal to value</td></tr>
+<tr><td><em>type</em>:not(<em>selector</em>)</td><td>Selects all elements except the ones defined by selector</td></tr>
+<tr><td><em>selector</em>:nth-child(<em>number</em>)</td><td>Selects the nth child (where n is number) of  selector</td></tr>
+<tr><td><em>type</em>:nth-of_type(<em>number</em>)</td><td>Selects the nth element (where n is number) of type</td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="selector-examples"></a><a href="#selector-examples" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Selector Examples</h3>
+<pre><code class="hljs"> page.<span class="hljs-constructor">$('#<span class="hljs-params">container</span>')</span>
+ page.<span class="hljs-constructor">$('.<span class="hljs-params">container</span>')</span>
+ page.<span class="hljs-constructor">$('<span class="hljs-params">div</span>')</span>
+ page.<span class="hljs-constructor">$('.<span class="hljs-params">container</span> .<span class="hljs-params">content</span>')</span>
+ page.<span class="hljs-constructor">$('.<span class="hljs-params">container</span> &gt; .<span class="hljs-params">child</span>')</span>
+ page.<span class="hljs-constructor">$('.<span class="hljs-params">container</span> + .<span class="hljs-params">sibling</span>')</span>
+ page.<span class="hljs-constructor">$('.<span class="hljs-params">container</span>[<span class="hljs-params">title</span>=<span class="hljs-string">"My title"</span>]')</span>
+ page.<span class="hljs-constructor">$('<span class="hljs-params">div</span>:<span class="hljs-params">not</span>(<span class="hljs-string">".error"</span>)</span>')
+ page.<span class="hljs-constructor">$('<span class="hljs-params">span</span>:<span class="hljs-params">nth</span>-<span class="hljs-params">child</span>(3)</span>')
+ page.<span class="hljs-constructor">$('<span class="hljs-params">span</span>:<span class="hljs-params">nth</span>-<span class="hljs-params">of</span>-<span class="hljs-params">type</span>(2)</span>')
+</code></pre>
+<p><em>All selectors can be chained</em></p>
+<h2><a class="anchor" aria-hidden="true" id="element-handles"></a><a href="#element-handles" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Element handles</h2>
+<p>The result of a selection is one or an array of element handles, which represent the actual elements.</p>
+<p>You can directly interact with an element handle, but one of the more common uses is to get its text contents with its <em>textContent()</em> function:</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> item = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'#text'</span>);
+<span class="hljs-keyword">const</span> text = <span class="hljs-keyword">await</span> text.textContent();
+<span class="hljs-keyword">return</span> text;
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/doc6"><span class="arrow-prev">← </span><span>The Browser Object</span></a><a class="docs-next button" href="/docs/doc7.1"><span>Navigation</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#what-are-selectors">What are selectors?</a></li><li><a href="#selecting-many-elements">Selecting many elements</a></li><li><a href="#chaining-selectors">Chaining Selectors</a><ul class="toc-headings"><li><a href="#examples">Examples</a></li></ul></li><li><a href="#common-css-selectors">Common CSS Selectors</a><ul class="toc-headings"><li><a href="#selector-examples">Selector Examples</a></li></ul></li><li><a href="#element-handles">Element handles</a></li></ul></nav></div><footer class="nav-footer" id="footer"></footer></div></body></html>

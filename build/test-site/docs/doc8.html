@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Interactions · PlaywrightJS Tutorial</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="## Element Interactions"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Interactions · PlaywrightJS Tutorial"/><meta property="og:type" content="website"/><meta property="og:url" content="https://www,google.com/"/><meta property="og:description" content="## Element Interactions"/><meta property="og:image" content="https://www,google.com/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://www,google.com/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.ico" alt="PlaywrightJS Tutorial"/><h2 class="headerTitleWithLogo">PlaywrightJS Tutorial</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/doc1" target="_self">Docs</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>The Playwright Library</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Setup</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc1">PlaywrightJS Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc2">Install Mocha and Chai</a></li><li class="navListItem"><a class="navItem" href="/docs/doc3">Installation Test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">First Steps</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc4">Create a PlaywrightJS Test</a></li><li class="navListItem"><a class="navItem" href="/docs/doc5">Using Mocha and Chai</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">The Playwright Library</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc6">The Browser Object</a></li><li class="navListItem"><a class="navItem" href="/docs/doc7">Selectors</a></li><li class="navListItem"><a class="navItem" href="/docs/doc7.1">Navigation</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/doc8">Interactions</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Using PlayWright on web pages</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc9">A real world case</a></li><li class="navListItem"><a class="navItem" href="/docs/doc9.1">An answer</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Code Generation</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc10">Code Generation</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Interactions</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="element-interactions"></a><a href="#element-interactions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Element Interactions</h2>
+<p>Playwright can interact with HTML items, simulating user actions like clicking, entering text and selecting options.</p>
+<p>##Input text
+The <strong>fill</strong> method can be used to simulate entering text On HTML elements that accept this action, like <code>&lt;textarea&gt;</code>, <code>&lt;input &gt;</code> and associated <code>&lt;label&gt;</code>.</p>
+<p>This method needs two arguments:
+<code>page.fill(selector, text)</code></p>
+<h3><a class="anchor" aria-hidden="true" id="examples"></a><a href="#examples" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
+<pre><code class="hljs"><span class="hljs-function">await page.<span class="hljs-title">fill</span><span class="hljs-params">(<span class="hljs-string">'#name'</span>, <span class="hljs-string">'Peter'</span>)</span></span>;
+<span class="hljs-function">await page.<span class="hljs-title">fill</span><span class="hljs-params">(<span class="hljs-string">'#date'</span>, <span class="hljs-string">'2020-02-02'</span>)</span></span>;
+<span class="hljs-function">await page.<span class="hljs-title">fill</span><span class="hljs-params">(<span class="hljs-string">'#time'</span>, <span class="hljs-string">'13-15'</span>)</span></span>;
+<span class="hljs-function">await page.<span class="hljs-title">fill</span><span class="hljs-params">(<span class="hljs-string">'#local'</span>, <span class="hljs-string">'2020-03-02T05:15'</span>)</span></span>;
+<span class="hljs-function">await page.<span class="hljs-title">fill</span><span class="hljs-params">(<span class="hljs-string">'text=First Name'</span>, <span class="hljs-string">'Peter'</span>)</span></span>;
+</code></pre>
+<p><strong>fill</strong> can also be called from a selected element:</p>
+<pre><code class="hljs"><span class="hljs-keyword">const</span> element = <span class="hljs-keyword">await</span> page.$(<span class="hljs-string">'#name'</span>);
+element.fill(<span class="hljs-string">'Vote for Pedro'</span>);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="checking-checkboxes-and-radio-buttons"></a><a href="#checking-checkboxes-and-radio-buttons" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Checking Checkboxes and Radio Buttons</h2>
+<p>The <strong>check</strong> and <strong>uncheck</strong> methods can be used check an uncheck <code>input[type=checkbox]</code>, <code>input[type=radio]</code>, <code>[role=checkbox]</code> and associated labels.</p>
+<p>These methods needs two arguments:
+<code>page.check(selector)</code>
+<code>page.uncheck(selector)</code></p>
+<h3><a class="anchor" aria-hidden="true" id="examples-1"></a><a href="#examples-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
+<pre><code class="hljs">await <span class="hljs-meta">page</span>.<span class="hljs-meta">check</span>(<span class="hljs-string">'#agree'</span>);
+await <span class="hljs-meta">page</span>.uncheck(<span class="hljs-string">'#subscribe-label'</span>);
+await <span class="hljs-meta">page</span>.<span class="hljs-meta">check</span>(<span class="hljs-string">'text=XL'</span>);
+</code></pre>
+<p><strong>check</strong> and <strong>uncheck</strong> can also be called from a selected element</p>
+<h2><a class="anchor" aria-hidden="true" id="dropdowns"></a><a href="#dropdowns" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Dropdowns</h2>
+<p>The <strong>selectOption</strong> method is used to select one o several options on a dropdown.</p>
+<p>This method needs two arguments:
+<code>page.selectOption(selector, value)</code>
+<code>page.selectOption(selector, [values])</code></p>
+<h3><a class="anchor" aria-hidden="true" id="examples-2"></a><a href="#examples-2" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
+<p>Select by option value</p>
+<pre><code class="hljs"><span class="hljs-attribute">await</span> page.<span class="hljs-literal">select</span>Option(<span class="hljs-string">'select#colors'</span>, <span class="hljs-string">'blue'</span>);
+</code></pre>
+<p>Select by option label</p>
+<pre><code class="hljs">await <span class="hljs-meta">page</span>.selectOpti<span class="hljs-meta">on(</span><span class="hljs-string">'select#colors'</span>, { <span class="hljs-meta">label</span>: <span class="hljs-string">'Blue'</span> });
+</code></pre>
+<p>Selecting several options</p>
+<pre><code class="hljs"><span class="hljs-attribute">await</span> page.<span class="hljs-literal">select</span>Option(<span class="hljs-string">'select#colors'</span>, [<span class="hljs-string">'red'</span>, <span class="hljs-string">'green'</span>, <span class="hljs-string">'blue'</span>]);
+</code></pre>
+<p><strong>selectOption</strong> can also be called from a selected element:</p>
+<pre><code class="hljs">const option = await page.<span class="hljs-constructor">$('#<span class="hljs-params">best</span>-<span class="hljs-params">option</span>')</span>;
+await page.select<span class="hljs-constructor">Option('<span class="hljs-params">select</span>#<span class="hljs-params">colors</span>', <span class="hljs-params">option</span>)</span>;
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="mouse-operations"></a><a href="#mouse-operations" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Mouse operations</h2>
+<p>Playwright can emulate common mouse operations, like clicking, double clicking and hovering.</p>
+<h3><a class="anchor" aria-hidden="true" id="examples-3"></a><a href="#examples-3" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
+<p>Single click</p>
+<pre><code class="hljs"><span class="hljs-function">await page.<span class="hljs-title">click</span><span class="hljs-params">(<span class="hljs-string">'button#submit'</span>)</span></span>;
+</code></pre>
+<p>Double click</p>
+<pre><code class="hljs"><span class="hljs-function">await page.<span class="hljs-title">dblclick</span><span class="hljs-params">(<span class="hljs-string">'#item'</span>)</span></span>;
+</code></pre>
+<p>Right click</p>
+<pre><code class="hljs"><span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'#item'</span>, { <span class="hljs-keyword">button</span>: <span class="hljs-string">'right'</span> })<span class="hljs-comment">;</span>
+</code></pre>
+<p>Shift and click</p>
+<pre><code class="hljs"><span class="hljs-function">await page.<span class="hljs-title">click</span><span class="hljs-params">(<span class="hljs-string">'#item'</span>, { modifiers: [<span class="hljs-string">'Shift'</span>] })</span></span>;
+</code></pre>
+<p>Hover over element</p>
+<pre><code class="hljs"><span class="hljs-function">await page.<span class="hljs-title">hover</span><span class="hljs-params">(<span class="hljs-string">'#item'</span>)</span></span>;
+</code></pre>
+<p>Click on specific position</p>
+<pre><code class="hljs"><span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">page</span><span class="hljs-selector-class">.click</span>(<span class="hljs-string">'#item'</span>, { <span class="hljs-attribute">position</span>: { <span class="hljs-attribute">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">0</span>} });
+</code></pre>
+<p>##Typing characters
+The <strong>type</strong> method can be used to simulate entering one character at a time, in cases where such an event is needed.</p>
+<p>This method needs two arguments:
+<code>page.type(selector, text)</code></p>
+<h3><a class="anchor" aria-hidden="true" id="examples-4"></a><a href="#examples-4" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
+<pre><code class="hljs"><span class="hljs-title">await</span> page.<span class="hljs-keyword">type</span>('#area', '<span class="hljs-type">Hello</span> <span class="hljs-type">World</span>!');
+</code></pre>
+<p>##Key press
+The <strong>press</strong> method can be used to simulate entering special keys, such as Enter, Shift, and their combinations</p>
+<p>This method needs two arguments:
+<code>page.press(selector, key)</code>
+<code>page.press(selector, keyCombination)</code></p>
+<h3><a class="anchor" aria-hidden="true" id="key-list"></a><a href="#key-list" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Key list</h3>
+<p>This is the list of the most used valid key names:</p>
+<ul>
+<li>Alt</li>
+<li>AltGraph</li>
+<li>CapsLock</li>
+<li>Control</li>
+<li>F1 - F12</li>
+<li>FnLock</li>
+<li>Hyper</li>
+<li>Meta (Windows Logo)</li>
+<li>NumLock</li>
+<li>ScrollLock</li>
+<li>Shift</li>
+<li>Enter</li>
+<li>Tab</li>
+<li>&quot; &quot; (Space)</li>
+<li>ArrowUp</li>
+<li>ArrowDown</li>
+<li>ArrowLeft</li>
+<li>ArrowRight</li>
+<li>End</li>
+<li>Home</li>
+<li>PageDown</li>
+<li>PageUp</li>
+<li>Backspace</li>
+<li>Insert</li>
+</ul>
+<p><em>The full key list can be found <a href="https://developer.mozilla.org/es/docs/Web/API/KeyboardEvent/key/Key_Values">here</a></em></p>
+<h3><a class="anchor" aria-hidden="true" id="examples-5"></a><a href="#examples-5" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
+<pre><code class="hljs"><span class="hljs-function">await page.<span class="hljs-title">press</span><span class="hljs-params">(<span class="hljs-string">'#name'</span>, <span class="hljs-string">'Shift+A'</span>)</span></span>;
+<span class="hljs-function">await page.<span class="hljs-title">press</span><span class="hljs-params">(<span class="hljs-string">'#name'</span>, <span class="hljs-string">'Shift+ArrowLeft'</span>)</span></span>;
+</code></pre>
+<p>##File upload
+The <strong>setInputFiles</strong> method can be used to upload files to the proper HTML component.</p>
+<p>This method needs two arguments:
+<code>page.fill(selector, filenamePath)</code>
+<code>page.fill(selector, [filenamesPaths])</code></p>
+<p><em>the default file path is the working directory</em></p>
+<h3><a class="anchor" aria-hidden="true" id="examples-6"></a><a href="#examples-6" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Examples</h3>
+<pre><code class="hljs"><span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">page</span><span class="hljs-selector-class">.setInputFiles</span>(<span class="hljs-string">'input#upload'</span>, <span class="hljs-string">'myfile.pdf'</span>);
+
+<span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">page</span><span class="hljs-selector-class">.setInputFiles</span>(<span class="hljs-string">'input#upload'</span>, [<span class="hljs-string">'file1.txt'</span>, <span class="hljs-string">'file2.txt'</span>]);
+
+<span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">page</span><span class="hljs-selector-class">.setInputFiles</span>(<span class="hljs-string">'input#upload'</span>, []);
+
+<span class="hljs-comment">// From memory</span>
+<span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">page</span><span class="hljs-selector-class">.setInputFiles</span>(<span class="hljs-string">'input#upload'</span>, {
+  <span class="hljs-attribute">name</span>: <span class="hljs-string">'file.txt'</span>,
+  <span class="hljs-attribute">mimeType</span>: <span class="hljs-string">'text/plain'</span>,
+  <span class="hljs-attribute">buffer</span>: Buffer.from(<span class="hljs-string">'this is test'</span>)
+});
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/doc7.1"><span class="arrow-prev">← </span><span>Navigation</span></a><a class="docs-next button" href="/docs/doc9"><span>A real world case</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#element-interactions">Element Interactions</a><ul class="toc-headings"><li><a href="#examples">Examples</a></li></ul></li><li><a href="#checking-checkboxes-and-radio-buttons">Checking Checkboxes and Radio Buttons</a><ul class="toc-headings"><li><a href="#examples-1">Examples</a></li></ul></li><li><a href="#dropdowns">Dropdowns</a><ul class="toc-headings"><li><a href="#examples-2">Examples</a></li></ul></li><li><a href="#mouse-operations">Mouse operations</a><ul class="toc-headings"><li><a href="#examples-3">Examples</a></li><li><a href="#examples-4">Examples</a></li><li><a href="#key-list">Key list</a></li><li><a href="#examples-5">Examples</a></li><li><a href="#examples-6">Examples</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"></footer></div></body></html>

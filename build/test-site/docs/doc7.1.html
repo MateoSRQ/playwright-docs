@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Navigation · PlaywrightJS Tutorial</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="A usual web test do three main things:"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Navigation · PlaywrightJS Tutorial"/><meta property="og:type" content="website"/><meta property="og:url" content="https://www,google.com/"/><meta property="og:description" content="A usual web test do three main things:"/><meta property="og:image" content="https://www,google.com/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://www,google.com/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.ico" alt="PlaywrightJS Tutorial"/><h2 class="headerTitleWithLogo">PlaywrightJS Tutorial</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/doc1" target="_self">Docs</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>The Playwright Library</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Setup</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc1">PlaywrightJS Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc2">Install Mocha and Chai</a></li><li class="navListItem"><a class="navItem" href="/docs/doc3">Installation Test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">First Steps</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc4">Create a PlaywrightJS Test</a></li><li class="navListItem"><a class="navItem" href="/docs/doc5">Using Mocha and Chai</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">The Playwright Library</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc6">The Browser Object</a></li><li class="navListItem"><a class="navItem" href="/docs/doc7">Selectors</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/doc7.1">Navigation</a></li><li class="navListItem"><a class="navItem" href="/docs/doc8">Interactions</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Using PlayWright on web pages</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc9">A real world case</a></li><li class="navListItem"><a class="navItem" href="/docs/doc9.1">An answer</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Code Generation</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/doc10">Code Generation</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Navigation</h1></header><article><div><span><p>A usual web test do three main things:</p>
+<ul>
+<li>Navigate to a web page</li>
+<li>Interact with elements</li>
+<li>Check the current state</li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="navigating-using-pagegoto"></a><a href="#navigating-using-pagegoto" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Navigating using page.goto()</h2>
+<p>One way to make the test to navigate to another wen page is using the <em>page.goto()</em> function.</p>
+<pre><code class="hljs css language-javascript">page.goto(url);
+</code></pre>
+<p>When executed, the page.goto() function will auto-wait for the <em>load</em> event on the page to be triggered. There are other useful options that can be used:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'http://www.google.com'</span>)
+</code></pre>
+<p>waits for load event (default)</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'http://www.google.com'</span>, { <span class="hljs-attr">waitUntil</span>: <span class="hljs-string">'networkidle'</span> } )
+</code></pre>
+<p>waits for the network traffic to be idle</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'http://www.google.com'</span>, { <span class="hljs-attr">waitUntil</span>: <span class="hljs-string">'domcontentloaded'</span> } )
+</code></pre>
+<p>waits for all the DOM content to be loaded</p>
+<h2><a class="anchor" aria-hidden="true" id="wait-for-an-element"></a><a href="#wait-for-an-element" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Wait for an element</h2>
+<p>On some pages, it is useful to wait for a specific element to be loaded and visible. On these cases, a <em>page.waitForSelector(selector)</em> is used.</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'https://example.com'</span>);
+<span class="hljs-keyword">await</span> page.waitForSelector(<span class="hljs-string">'text=Example Domain'</span>);
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="wait-for-async-navigation"></a><a href="#wait-for-async-navigation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Wait for async navigation</h2>
+<p>Some modern pages trigger aditional events before initiating a navigation. On these cases, a <em>page.waitforNavigation()</em> should be used.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'a'</span>);
+<span class="hljs-keyword">await</span> page.waitForNavigation();
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="other-navigation-functions"></a><a href="#other-navigation-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Other navigation functions</h2>
+<p>These are less common navigation funcions:</p>
+<p>Reloads the page:</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> page.reload();
+</code></pre>
+<p>Navigates back and forward history</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">await</span> page.goBack();
+<span class="hljs-keyword">await</span> page.goForward()
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/doc7"><span class="arrow-prev">← </span><span>Selectors</span></a><a class="docs-next button" href="/docs/doc8"><span>Interactions</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#navigating-using-pagegoto">Navigating using page.goto()</a></li><li><a href="#wait-for-an-element">Wait for an element</a></li><li><a href="#wait-for-async-navigation">Wait for async navigation</a></li><li><a href="#other-navigation-functions">Other navigation functions</a></li></ul></nav></div><footer class="nav-footer" id="footer"></footer></div></body></html>
